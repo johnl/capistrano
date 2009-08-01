@@ -53,6 +53,9 @@ module Capistrano
               cmd.gsub!('/','\\') # Replace / with \\
               cmd.gsub!(/^cd /,'cd /D ') # Replace cd with cd /D
               cmd.gsub!(/&& cd /,'&& cd /D ') # Replace cd with cd /D
+              cmd.gsub!(/^cp -rf /,'xcopy /s /Y ') # Replace cp with windows xcopy
+              cmd.gsub!(/&& cp -rf /,'&& xcopy /s /Y ') # Replace cp with windows xcopy
+              cmd.gsub!(/^p4 /,"cmd /c #{variable(:p4client)} ") # Start a new cmd shell if a p4 command is run.
               logger.trace "executing locally: #{cmd}"
               super(cmd)
             else
